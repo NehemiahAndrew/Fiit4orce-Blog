@@ -3,6 +3,10 @@ import { FieldValue } from "firebase-admin/firestore";
 import { getAdminDb, hasFirebaseAdminConfig } from "@/lib/firebase-admin";
 import { sanitizeText } from "@/lib/sanitize";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+export const fetchCache = "force-no-store";
+
 const rateWindowMs = 60_000;
 const maxRequestsPerWindow = 10;
 const requestStore = new Map<string, { count: number; expiresAt: number }>();
