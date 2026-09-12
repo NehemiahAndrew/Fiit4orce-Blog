@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { FieldValue } from "firebase-admin/firestore";
-import { adminDb, hasFirebaseAdminConfig } from "@/lib/firebase-admin";
+import { getAdminDb, hasFirebaseAdminConfig } from "@/lib/firebase-admin";
 import { sanitizeText } from "@/lib/sanitize";
 
 const rateWindowMs = 60_000;
@@ -40,7 +40,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Rate limit exceeded." }, { status: 429 });
     }
 
-    if (!hasFirebaseAdminConfig || !adminDb) {
+    if (!hasFirebaseAdminConfig()) {
+      return NextResponse.json({ ok: true }, { status: 200 });
+    }
+
+    const adminDb = getAdminDb();
+
+    if (!adminDb) {
       return NextResponse.json({ ok: true }, { status: 200 });
     }
 

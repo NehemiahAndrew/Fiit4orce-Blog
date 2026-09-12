@@ -105,6 +105,46 @@ function slugFromPermalink(permalink: unknown, fallback: string) {
   return clean || fallback;
 }
 
+function fallbackFeaturedImage(category: PostCategory | string) {
+  switch (category) {
+    case "Air Force":
+      return "/blog-images/naf-screening-day.png";
+    case "Army":
+      return "/blog-images/army-official-info-check.png";
+    case "FRSC":
+    case "Fitness":
+      return "/screenshots/fitness.png";
+    case "Police":
+    case "NSCDC":
+    case "Customs":
+      return "/screenshots/dashboard.png";
+    case "Navy":
+    case "NDA":
+    case "DSSC":
+    case "Immigration":
+      return "/screenshots/prep.png";
+    default:
+      return "/screenshots/dashboard.png";
+  }
+}
+
+function normalizeFeaturedImage(
+  featuredImage: unknown,
+  category: PostCategory | string
+) {
+  if (typeof featuredImage !== "string") {
+    return fallbackFeaturedImage(category);
+  }
+
+  const value = featuredImage.trim();
+
+  if (!value || /^https?:\/\//i.test(value)) {
+    return fallbackFeaturedImage(category);
+  }
+
+  return value;
+}
+
 async function getLocalMarkdownPosts() {
   const postsDir = path.join(process.cwd(), "_posts");
 
@@ -130,8 +170,11 @@ async function getLocalMarkdownPosts() {
           slug,
           content,
           excerpt: String(data.description ?? data.excerpt ?? ""),
-          featuredImage: String(data.featuredImage ?? "/screenshots/dashboard.png"),
           category: String(categories[0] ?? "Recruitment Tips") as PostCategory,
+          featuredImage: normalizeFeaturedImage(
+            data.featuredImage,
+            String(categories[0] ?? "Recruitment Tips") as PostCategory
+          ),
           tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
           seoTitle: String(data.seoTitle ?? data.title ?? slug),
           seoDescription: String(data.seoDescription ?? data.description ?? ""),
@@ -152,14 +195,16 @@ async function getLocalMarkdownPosts() {
 }
 
 function mapPost(id: string, data: Record<string, unknown>): BlogPost {
+  const category = String(data.category ?? "Recruitment Tips") as PostCategory;
+
   return {
     id,
     title: String(data.title ?? ""),
     slug: String(data.slug ?? id),
     content: String(data.content ?? ""),
     excerpt: String(data.excerpt ?? ""),
-    featuredImage: String(data.featuredImage ?? "/screenshots/dashboard.png"),
-    category: String(data.category ?? "Recruitment Tips") as PostCategory,
+    featuredImage: normalizeFeaturedImage(data.featuredImage, category),
+    category,
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     seoTitle: String(data.seoTitle ?? data.title ?? ""),
     seoDescription: String(data.seoDescription ?? data.excerpt ?? ""),
@@ -196,7 +241,12 @@ export async function getPublishedPosts(maxItems = 24) {
   const localPosts = await getLocalMarkdownPosts();
 
   if (!hasFirebaseConfig) {
-    return mergePosts(localPosts, samplePosts).slice(0, maxItems);
+    return mergePosts(localPosts, samplePosts)
+      .slice(0, maxItems)
+      .map((post) => ({
+        ...post,
+        featuredImage: normalizeFeaturedImage(post.featuredImage, post.category),
+      }));
   }
 
   try {
@@ -210,9 +260,19 @@ export async function getPublishedPosts(maxItems = 24) {
     );
 
     const posts = snapshot.docs.map((doc) => mapPost(doc.id, doc.data()));
-    return mergePosts([...localPosts, ...posts], samplePosts).slice(0, maxItems);
+    return mergePosts([...localPosts, ...posts], samplePosts)
+      .slice(0, maxItems)
+      .map((post) => ({
+        ...post,
+        featuredImage: normalizeFeaturedImage(post.featuredImage, post.category),
+      }));
   } catch {
-    return mergePosts(localPosts, samplePosts).slice(0, maxItems);
+    return mergePosts(localPosts, samplePosts)
+      .slice(0, maxItems)
+      .map((post) => ({
+        ...post,
+        featuredImage: normalizeFeaturedImage(post.featuredImage, post.category),
+      }));
   }
 }
 

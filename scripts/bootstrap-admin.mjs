@@ -2,6 +2,10 @@ import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import { loadEnvLocal } from "./load-env-local.mjs";
 
+function getPrivateKey() {
+  return process.env.FIREBASE_PRIVATE_KEY?.trim().replace(/^"|"$/g, "").replace(/^'|'$/g, "").replace(/\\n/g, "\n");
+}
+
 loadEnvLocal();
 
 const [email, password, displayName = "Fit4Force Admin"] = process.argv.slice(2);
@@ -31,7 +35,7 @@ const app =
     credential: cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      privateKey: getPrivateKey(),
     }),
   });
 
