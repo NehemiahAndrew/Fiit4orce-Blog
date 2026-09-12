@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Poppins";
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fafcff;
+  color: #20293a;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(0, 199, 232, 0.2);
+  color: #20293a;
+}
+
+.prose-content strong {
+  color: #20293a;
+}
+
+.prose-content p:first-child {
+  font-size: 1.15rem;
+  line-height: 1.95rem;
+}
+
+.prose-content h2 + p {
+  margin-top: 1rem;
+}
+
+.prose-content p {
+  max-width: 70ch;
+}
+
+.prose-content ul {
+  max-width: 70ch;
+}
+
+.prose-content li::marker {
+  color: #00c7e8;
+}

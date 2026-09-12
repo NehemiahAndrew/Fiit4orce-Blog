@@ -1,0 +1,16 @@
+   ▲ Next.js 15.5.19
+   - Local:        http://localhost:3020
+   - Network:      http://192.168.161.128:3020
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 7.1s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 798ms (158 modules)
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 19.6s (869 modules)
+ GET /blog 200 in 30658ms
+ ○ Compiling /blog/[slug] ...
+ ✓ Compiled /blog/[slug] in 1689ms (912 modules)
+ GET /blog/is-nigeria-customs-recruitment-free 200 in 9668ms
+[?25h
