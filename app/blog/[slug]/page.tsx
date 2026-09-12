@@ -13,7 +13,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { ViewTracker } from "@/components/seo/view-tracker";
 import { ShareActions } from "@/components/content/share-actions";
 import { getPostBySlug, getRelatedPosts } from "@/lib/content";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, blogAbsoluteUrl } from "@/lib/site";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -35,14 +35,14 @@ export async function generateMetadata({
     title: post.seoTitle || post.title,
     description: post.seoDescription || post.excerpt,
     alternates: {
-      canonical: absoluteUrl(`/blog/${post.slug}`),
+      canonical: blogAbsoluteUrl(`/${post.slug}`),
     },
     openGraph: {
       title: post.seoTitle || post.title,
       description: post.seoDescription || post.excerpt,
-      images: [post.featuredImage],
+      images: [blogAbsoluteUrl(post.featuredImage)],
       type: "article",
-      url: absoluteUrl(`/blog/${post.slug}`),
+      url: blogAbsoluteUrl(`/${post.slug}`),
     },
   };
 }
@@ -56,7 +56,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   const relatedPosts = await getRelatedPosts(post);
-  const shareUrl = absoluteUrl(`/blog/${post.slug}`);
+  const shareUrl = blogAbsoluteUrl(`/${post.slug}`);
   const headings = extractHeadings(post.content);
   const readingTime = Math.max(
     1,
@@ -78,8 +78,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             "@type": "Person",
             name: post.author,
           },
-          image: [absoluteUrl(post.featuredImage)],
-          mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+          image: [blogAbsoluteUrl(post.featuredImage)],
+          mainEntityOfPage: blogAbsoluteUrl(`/${post.slug}`),
         }}
       />
       <Section tone="white" className="py-10 md:py-14">

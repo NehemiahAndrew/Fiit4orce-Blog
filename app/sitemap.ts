@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPublishedPosts, getPublishedRecruitmentUpdates } from "@/lib/content";
-import { absoluteUrl, siteConfig, toolRoutes } from "@/lib/site";
+import { absoluteUrl, blogAbsoluteUrl, siteConfig, toolRoutes } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [posts, updates] = await Promise.all([
@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
     })),
     ...posts.map((post) => ({
-      url: absoluteUrl(`/blog/${post.slug}`),
+      url: blogAbsoluteUrl(`/${post.slug}`),
       lastModified: new Date(post.updatedAt || post.publishedAt),
     })),
     ...updates.map((update) => ({

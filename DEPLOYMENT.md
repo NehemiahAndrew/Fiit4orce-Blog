@@ -8,6 +8,8 @@ Use three Vercel projects or one shared codebase with host-based routing:
   Domain: `fit4force.com.ng`
    Purpose: marketing site, blog, updates, and tools
 
+  Blog host: `blog.fit4force.com.ng`
+
 2. `fit4force-admin`
   Domain: `admin.fit4force.com.ng`
    Purpose: same Next.js codebase, routed through `middleware.ts` to `/admin`
@@ -39,6 +41,8 @@ Use three Vercel projects or one shared codebase with host-based routing:
   Firebase web app id.
 - `NEXT_PUBLIC_SITE_URL`
   Canonical public domain, usually `https://fit4force.com.ng`.
+- `NEXT_PUBLIC_BLOG_URL`
+  Blog domain, usually `https://blog.fit4force.com.ng`.
 - `NEXT_PUBLIC_ADMIN_URL`
   Admin domain, usually `https://admin.fit4force.com.ng`.
 - `NEXT_PUBLIC_APP_URL`
@@ -60,8 +64,9 @@ Use three Vercel projects or one shared codebase with host-based routing:
 1. Import this repo into Vercel.
 2. Add the public and server env vars above.
 3. Attach `fit4force.com.ng` to the public project.
-4. Attach `admin.fit4force.com.ng` to the same project if you want host-based admin routing from one codebase.
-5. Attach `app.fit4force.com.ng` to the Flutter Web deployment.
+4. Attach `blog.fit4force.com.ng` to the same project for the blog.
+5. Attach `admin.fit4force.com.ng` to the same project if you want host-based admin routing from one codebase.
+6. Attach `app.fit4force.com.ng` to the Flutter Web deployment.
 6. Deploy.
 
 ## Firebase console steps

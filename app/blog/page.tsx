@@ -5,20 +5,20 @@ import { Section } from "@/components/layout/section";
 import { BlogIndex } from "@/components/content/blog-index";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { getPublishedPosts } from "@/lib/content";
-import { absoluteUrl } from "@/lib/site";
+import { blogAbsoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Fit4Force Blog - Recruitment Preparation Guides",
   description:
     "Read Fit4Force guides on Nigerian military and paramilitary recruitment preparation, fitness, screening, and aptitude practice.",
   alternates: {
-    canonical: absoluteUrl("/blog"),
+    canonical: blogAbsoluteUrl("/"),
   },
   openGraph: {
     title: "Fit4Force Blog - Recruitment Preparation Guides",
     description:
       "Read Fit4Force guides on Nigerian military and paramilitary recruitment preparation, fitness, screening, and aptitude practice.",
-    url: absoluteUrl("/blog"),
+    url: blogAbsoluteUrl("/"),
     type: "website",
   },
 };

@@ -1,6 +1,7 @@
 export const siteConfig = {
   siteName: "Fit4Force",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://fit4force.com.ng",
+  blogUrl: process.env.NEXT_PUBLIC_BLOG_URL ?? "https://blog.fit4force.com.ng",
   adminUrl: process.env.NEXT_PUBLIC_ADMIN_URL ?? "https://admin.fit4force.com.ng",
   appUrl: process.env.NEXT_PUBLIC_APP_URL ?? "https://app.fit4force.com.ng",
   downloadUrl:
@@ -32,4 +33,9 @@ export const toolRoutes = [
 export function absoluteUrl(path: string) {
   const normalized = path.startsWith("/") ? path : `/${path}`;
   return new URL(normalized, siteConfig.siteUrl).toString();
+}
+
+export function blogAbsoluteUrl(path: string) {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return new URL(normalized, siteConfig.blogUrl).toString();
 }

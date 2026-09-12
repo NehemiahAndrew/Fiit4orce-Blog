@@ -83,6 +83,10 @@ npm run bootstrap:admin -- admin@fit4force.com.ng your-secure-password "Fit4Forc
 
 Then sign in at `admin.fit4force.com.ng`.
 
+## Blog host
+
+Use `blog.fit4force.com.ng` for the blog subdomain.
+
 ## Support contact
 
 Customer support email: `contact.nehemiahtech@gmail.com`
