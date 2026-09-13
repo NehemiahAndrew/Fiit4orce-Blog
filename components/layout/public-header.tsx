@@ -106,6 +106,9 @@ export function PublicHeader({
             mobilePanelClass
           )}
         >
+          <div className="mb-3 flex items-center justify-center">
+            <BrandLogo href="/" size="sm" theme={theme} />
+          </div>
           <nav className="space-y-1">
             {navItems.map((item) => {
               const isActive =

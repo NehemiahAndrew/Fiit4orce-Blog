@@ -124,7 +124,7 @@ export function BlogIndex({ posts }: { posts: BlogPost[] }) {
         )}
       </div>
 
-      <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
         {gridPosts.map((post, index) => (
           <PostCard
             key={post.id}
